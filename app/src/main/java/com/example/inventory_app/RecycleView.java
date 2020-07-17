@@ -1,15 +1,14 @@
 package com.example.inventory_app;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,10 +38,11 @@ public class RecycleView extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), Database.class, Constant.DB_NAME).allowMainThreadQueries().build();
         lv = (ListView)findViewById(R.id.list);
 
+
         if(data.equals("c")) {
             setTitle("Clients");
             int nProducts = db.clientDao().count();
-            Toast.makeText(this, "Clientes: " + nProducts , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Clients: " + nProducts , Toast.LENGTH_SHORT).show();
             loadClients();
         }
         else {
@@ -56,12 +56,34 @@ public class RecycleView extends AppCompatActivity {
     public void loadClients() {
         listClients = db.clientDao().getAllClients();
         AdapterClient adapterClient = new AdapterClient(this);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(RecycleView.this, InfoClients.class);
+                Long id = listClients.get(i).getId();
+                intent.putExtra("ID", id.toString());
+                startActivity(intent);
+            }
+        });
+
         lv.setAdapter(adapterClient);
     }
 
     public void loadProducts() {
         listProducts = db.productDao().getAllProducts();
         AdapterProduct adapterProduct = new AdapterProduct(this);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(RecycleView.this, InfoProduct.class);
+                Long id = listProducts.get(i).getId();
+                intent.putExtra("ID", id.toString());
+                startActivity(intent);
+            }
+        });
+
         lv.setAdapter(adapterProduct);
     }
 
@@ -88,12 +110,13 @@ public class RecycleView extends AppCompatActivity {
             appCompatActivity = context;
         }
 
+
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = appCompatActivity.getLayoutInflater();
             View item = inflater.inflate(R.layout.item,null);
 
             TextView txtInfo = (TextView)item.findViewById(R.id.txtNameItem);
-            String data = listProducts.get(position).getId() + ". " + listProducts.get(position).getName();
+            String data = listProducts.get(position).getId() + ".   " + listProducts.get(position).getName();
             txtInfo.setText(data);
 
             return item;
@@ -119,4 +142,5 @@ public class RecycleView extends AppCompatActivity {
             return item;
         }
     }
+
 }

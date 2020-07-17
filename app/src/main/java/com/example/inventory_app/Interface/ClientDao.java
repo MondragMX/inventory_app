@@ -6,6 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.inventory_app.Entity.Client;
+import com.example.inventory_app.Entity.Product;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface ClientDao {
 
     @Query("DELETE FROM " + Client.TABLE_NAME + " WHERE " + Client.COLUMN_ID + " = :id")
     int deteleById(long id);
+
+    @Query("SELECT * FROM " + Client.TABLE_NAME + " WHERE " + Client.COLUMN_ID + " = :id")
+    Client selectById(long id);
 
     @Update
     int updateEntity(Client c);

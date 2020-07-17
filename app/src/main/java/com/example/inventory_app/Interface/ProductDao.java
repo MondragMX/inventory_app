@@ -23,6 +23,9 @@ public interface ProductDao {
     @Query("DELETE FROM " + Product.TABLE_NAME + " WHERE " + Product.COLUMN_ID + " = :id")
     int deteleById(long id);
 
+    @Query("SELECT * FROM " + Product.TABLE_NAME + " WHERE " + Product.COLUMN_ID + " = :id")
+    Product selectById(long id);
+
     @Update
     int updateEntity(Product p);
 

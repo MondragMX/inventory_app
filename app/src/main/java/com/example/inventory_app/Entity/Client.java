@@ -27,13 +27,6 @@ public class Client {
     @ColumnInfo(name = "description")
     private String description;
 
-    public Client(long id, String name, String phone, String description) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.description = description;
-    }
-
     public Client() {
         this.name = "";
         this.phone = "";

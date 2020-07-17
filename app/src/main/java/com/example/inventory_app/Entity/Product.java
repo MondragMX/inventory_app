@@ -32,14 +32,6 @@ public class Product {
     @ColumnInfo(name = "cost")
     private String cost;
 
-    public Product(long id, String name, String description, String stock, String cost) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.stock = stock;
-        this.cost = cost;
-    }
-
     public Product() {
         this.name = "";
         this.description = "";
