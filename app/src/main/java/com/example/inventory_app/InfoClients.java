@@ -37,6 +37,7 @@ public class InfoClients extends AppCompatActivity {
         nameC = (EditText)findViewById(R.id.txtNameI2);
         nameC.setText(result.getName());
         phone = (EditText)findViewById(R.id.txtPhoneI);
+        phone.setText(result.getPhone());
         decC = (EditText)findViewById(R.id.txtDescI2);
         decC.setText(result.getDescription());
     }
